@@ -105,19 +105,16 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.define "testnode" do |testnode|
    testnode.vm.box = "oyj/centos7"
-   #testnode.vm.box_url = "file://C:/cygwin64/home/A/puppet/centos7.box"
    testnode.vm.provision "shell", :path => "install-puppet-node.sh"
    testnode.vm.provision "shell", :path => "package_and_time.sh"
    testnode.vm.provision "shell", inline: "sudo nmcli connection reload; sudo systemctl restart network.service"
    testnode.vm.network "private_network",ip:"10.100.0.11"
-        #virtualbox__nat: false
    testnode.vm.host_name = "testnode"
       testnode.vm.provider :virtualbox do |vb|
-        vb.customize ["modifyvm", :id,"--memory","128"]
+        vb.customize ["modifyvm", :id,"--memory","256"]
         vb.customize ["modifyvm", :id, "--usbehci", "off"]
         vb.customize ["modifyvm", :id, "--usb", "off"]
       end
-   testnode.vm.synced_folder ".", "/vagrant", type: "virtualbox"
    end
 
 end

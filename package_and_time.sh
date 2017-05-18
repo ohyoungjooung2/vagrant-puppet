@@ -55,5 +55,16 @@ install_repo(){
   fi
 }
 
+set_system(){
+  C=`grep "set -o vi" /home/vagrant/.bashrc`
+  if [[ ! $C ]]
+  then
+    echo "set -o vi" >> /home/vagrant/.bashrc
+    JOB="SETTING VI MODE"
+    check 
+  fi
+}
+
 configure_time
 install_repo
+set_system
